@@ -1,14 +1,23 @@
+import React, { useState } from "react";
+
 import "./styles/styles.css";
 
 import Header from "./components/Header";
 import Main from "./components/Main";
 
 export default function App() {
+  const [userDataApp, setUserDataApp] = useState([]);
+
+  const addDataHandler = (data) => {
+    setUserDataApp((prevData) => {
+      return [data, ...prevData];
+    });
+  };
+
   return (
-    // <> </> <- These are called React Fragments, and they allow us to return more than one top component
     <>
       <Header />
-      <Main />
+      <Main addDataHandler={addDataHandler} userDataApp={userDataApp} />
     </>
   );
 }

@@ -10,16 +10,18 @@ const initialData = {
   review: "",
   userName: "",
   email: "",
-  rateYourDuck: null,
+  color: "",
 };
 
-const Form = () => {
+const Form = ({ saveFormData }) => {
   const [formData, setFormData] = useState(initialData);
+  const [dataList, setDataList] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setDataList([...dataList, formData]);
+    saveFormData({ ...dataList });
     setFormData({ ...initialData });
-    console.log(formData);
   };
 
   const handleChange = (event) => {
@@ -37,7 +39,7 @@ const Form = () => {
       setFormData({ ...formData, email: value });
     }
     if (name === "color" && type === "radio") {
-      setFormData({ ...formData, rateYourDuck: value });
+      setFormData({ ...formData, color: value });
     }
     if (name === "swimming") {
       if (checked) setFormData({ ...formData, swimming: true, noTime: false });
