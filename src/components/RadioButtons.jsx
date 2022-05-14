@@ -1,6 +1,6 @@
 import React from "react";
 
-const RadioButtons = ({ onChange }) => {
+const RadioButtons = ({ onChange, formData }) => {
   return (
     <ul>
       <li>
@@ -9,10 +9,10 @@ const RadioButtons = ({ onChange }) => {
           type="radio"
           name="color"
           value="1"
-          // checked={formData.color === "1"}
+          checked={formData.rating === "1"}
           onChange={onChange}
         />
-        <label for="color-one">1</label>
+        <label htmlFor="color-one">1</label>
       </li>
       <li>
         <input
@@ -20,10 +20,10 @@ const RadioButtons = ({ onChange }) => {
           type="radio"
           name="color"
           value="2"
-          // checked={formData.color === "2"}
+          checked={formData.rating === "2"}
           onChange={onChange}
         />
-        <label for="color-two">2</label>
+        <label htmlFor="color-two">2</label>
       </li>
       <li>
         <input
@@ -31,10 +31,10 @@ const RadioButtons = ({ onChange }) => {
           type="radio"
           name="color"
           value="3"
-          // checked={formData.color === "3"}
+          checked={formData.rating === "3"}
           onChange={onChange}
         />
-        <label for="color-three">3</label>
+        <label htmlFor="color-three">3</label>
       </li>
       <li>
         <input
@@ -42,10 +42,10 @@ const RadioButtons = ({ onChange }) => {
           type="radio"
           name="color"
           value="4"
-          // checked={formData.color === "4"}
+          checked={formData.rating === "4"}
           onChange={onChange}
         />
-        <label for="color-four">4</label>
+        <label htmlFor="color-four">4</label>
       </li>
     </ul>
   );

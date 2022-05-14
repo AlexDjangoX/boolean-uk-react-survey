@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "swimming": true,
+      "bathing": true,
+      "chatting": true,
+      "noTime": false,
+      "review": "Hiking",
+      "userName": "DjangoX",
+      "email": "s@gmail.com",
+      "rating": "4",
+      "timeSpent": [
+        "swimming",
+        "bathing",
+        "chatting"
+      ],
+      "id": 1
+    }
+  ]
+}

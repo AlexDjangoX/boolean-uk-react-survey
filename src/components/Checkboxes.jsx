@@ -6,7 +6,7 @@ const Checkboxes = ({ onChange, formData }) => {
       <li>
         <label>
           <input
-            name="swimming"
+            name="spend-time"
             type="checkbox"
             value="swimming"
             checked={formData.swimming}
@@ -18,7 +18,7 @@ const Checkboxes = ({ onChange, formData }) => {
       <li>
         <label>
           <input
-            name="bathing"
+            name="spend-time"
             type="checkbox"
             value="bathing"
             checked={formData.bathing}
@@ -30,7 +30,7 @@ const Checkboxes = ({ onChange, formData }) => {
       <li>
         <label>
           <input
-            name="chatting"
+            name="spend-time"
             type="checkbox"
             value="chatting"
             checked={formData.chatting}
@@ -42,7 +42,7 @@ const Checkboxes = ({ onChange, formData }) => {
       <li>
         <label>
           <input
-            name="noTime"
+            name="spend-time"
             type="checkbox"
             value="noTime"
             checked={formData.noTime}

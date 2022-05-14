@@ -10,18 +10,30 @@ const initialData = {
   review: "",
   userName: "",
   email: "",
-  color: "",
+  rating: "",
+  timeSpent: [],
 };
 
-const Form = ({ saveFormData }) => {
+async function updateLocalServer(el) {
+  const opts = {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({ ...el }),
+  };
+
+  fetch(`http://localhost:3000/data`, opts)
+    .then((res) => res.json())
+    .then((data) => {});
+}
+
+const Form = ({ setUserDataApp }) => {
   const [formData, setFormData] = useState(initialData);
-  const [dataList, setDataList] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setDataList([...dataList, formData]);
-    saveFormData({ ...dataList });
-    setFormData({ ...initialData });
+    setUserDataApp((previous) => [...previous, formData]);
+    updateLocalServer(formData);
+    setFormData(initialData);
   };
 
   const handleChange = (event) => {
@@ -29,6 +41,9 @@ const Form = ({ saveFormData }) => {
 
     console.log(name, type, value, checked);
 
+    if (name === "color") {
+      setFormData({ ...formData, rating: value });
+    }
     if (name === "review" && type === "textarea") {
       setFormData({ ...formData, review: value });
     }
@@ -38,32 +53,12 @@ const Form = ({ saveFormData }) => {
     if (name === "email" && type === "email") {
       setFormData({ ...formData, email: value });
     }
-    if (name === "color" && type === "radio") {
-      setFormData({ ...formData, color: value });
-    }
-    if (name === "swimming") {
-      if (checked) setFormData({ ...formData, swimming: true, noTime: false });
-      if (!checked) setFormData({ ...formData, swimming: false });
-    }
-    if (name === "bathing") {
-      if (checked) setFormData({ ...formData, bathing: true, noTime: false });
-      if (!checked) setFormData({ ...formData, bathing: false });
-    }
-    if (name === "chatting") {
-      if (checked) setFormData({ ...formData, chatting: true, noTime: false });
-      if (!checked) setFormData({ ...formData, chatting: false });
-    }
-    if (name === "noTime") {
-      if (checked) {
-        setFormData({
-          ...formData,
-          swimming: false,
-          bathing: false,
-          chatting: false,
-          noTime: true,
-        });
-        if (!checked) setFormData({ ...formData, noTime: false });
-      }
+    if (name === "spend-time") {
+      setFormData({
+        ...formData,
+        [value]: checked,
+        timeSpent: [...formData.timeSpent, value],
+      });
     }
   };
 
@@ -112,3 +107,31 @@ const Form = ({ saveFormData }) => {
 };
 
 export default Form;
+
+// if (name === "swimming") {
+//   if (checked) setFormData({ ...formData, swimming: true, noTime: false });
+//   setFormData({ ...formData, timeSpent: [...timeSpent, "swimming"] });
+//   if (!checked) setFormData({ ...formData, swimming: false });
+// }
+// if (name === "bathing") {
+//   if (checked) setFormData({ ...formData, bathing: true, noTime: false });
+//   setFormData({ ...formData, timeSpent: [...timeSpent, "bathing"] });
+//   if (!checked) setFormData({ ...formData, bathing: false });
+// }
+// if (name === "chatting") {
+//   if (checked) setFormData({ ...formData, chatting: true, noTime: false });
+//   setFormData({ ...formData, timeSpent: [...timeSpent, "chatting"] });
+//   if (!checked) setFormData({ ...formData, chatting: false });
+// }
+// if (name === "noTime") {
+//   if (checked) {
+//     setFormData({
+//       ...formData,
+//       swimming: false,
+//       bathing: false,
+//       chatting: false,
+//       noTime: true,
+//     });
+//     if (!checked) setFormData({ ...formData, noTime: false });
+//   }
+// }

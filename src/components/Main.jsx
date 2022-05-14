@@ -2,13 +2,8 @@ import { useState } from "react";
 import Form from "./Form";
 import AnswersList from "./AnswersList";
 
-function Main({ addDataHandler, userDataApp }) {
+function Main({ addDataHandler, userDataApp, setUserDataApp }) {
   const [open, setOpen] = useState(false); //Ignore this state
-
-  const saveFormData = (dataFromForm) => {
-    const userData = { ...dataFromForm };
-    addDataHandler(userData);
-  };
 
   return (
     <main className="main">
@@ -17,7 +12,7 @@ function Main({ addDataHandler, userDataApp }) {
         <AnswersList userDataApp={userDataApp} />
       </section>
       <section className="main__form">
-        <Form saveFormData={saveFormData} />
+        <Form setUserDataApp={setUserDataApp} />
       </section>
     </main>
   );
