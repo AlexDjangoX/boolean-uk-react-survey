@@ -26,6 +26,8 @@ async function updateLocalServer(el) {
     .then((data) => {});
 }
 
+const setFormDataSpendTime = () => {};
+
 const Form = ({ setUserDataApp }) => {
   const [formData, setFormData] = useState(initialData);
 
@@ -53,12 +55,37 @@ const Form = ({ setUserDataApp }) => {
     if (name === "email" && type === "email") {
       setFormData({ ...formData, email: value });
     }
+
     if (name === "spend-time") {
+      if (checked) {
+        setFormData({ ...formData, value: true, noTime: false });
+        if (!formData.timeSpent.includes(value))
+          setFormData({
+            ...formData,
+            [value]: checked,
+            timeSpent: [...formData.timeSpent, value],
+          });
+      } else {
+        setFormData({ ...formData, value: false });
+        let filteredArray = formData.timeSpent.filter((el) => el !== value);
+        setFormData({
+          ...formData,
+          [value]: checked,
+          timeSpent: [...filteredArray],
+        });
+      }
+    }
+    if (name === "spend-time" && value === "noTime") {
       setFormData({
         ...formData,
-        [value]: checked,
-        timeSpent: [...formData.timeSpent, value],
+        [value]: !checked,
+        noTime: true,
+        swimming: false,
+        bathing: false,
+        chatting: false,
+        timeSpent: ["No time"],
       });
+      if (!checked) setFormData({ ...formData, noTime: false });
     }
   };
 
