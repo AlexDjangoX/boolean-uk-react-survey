@@ -40,13 +40,29 @@ h2 {
 
 .header {
   display: grid;
-  grid-auto-flow: column;
-  align-items: center;
-  justify-content: space-between;
+  grid-template-rows: 2;
   padding: 2rem;
   color: var(--primary-colour);
 }
 
+.header-image-heading {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-network-error {
+  margin-top: 2rem;
+
+  padding: 1rem;
+  border-radius: 8px;
+  color: rgb(255, 255, 255);
+}
+
+.header-network-error p {
+  padding: 1rem;
+}
 .main {
   display: grid;
   grid-auto-flow: column;

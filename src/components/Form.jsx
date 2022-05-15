@@ -2,41 +2,62 @@ import React, { useState } from "react";
 import RadioButtons from "./RadioButtons";
 import Checkboxes from "./Checkboxes";
 
-const initialData = {
-  swimming: false,
-  bathing: false,
-  chatting: false,
-  noTime: false,
-  review: "",
-  userName: "",
-  email: "",
-  rating: "",
-  timeSpent: [],
-};
+import { initialData } from "../Utils";
 
-async function updateLocalServer(el) {
+const baseUrl = "http://localhost:3000";
+
+async function updateLocalServer(el, id) {
   const opts = {
     method: "POST",
     headers: { "Content-type": "application/json" },
-    body: JSON.stringify({ ...el }),
+    body: JSON.stringify({ ...el, id }),
   };
 
-  fetch(`http://localhost:3000/data`, opts)
+  fetch(`${baseUrl}/data`, opts)
     .then((res) => res.json())
     .then((data) => {});
 }
 
-const setFormDataSpendTime = () => {};
-
-const Form = ({ setUserDataApp }) => {
-  const [formData, setFormData] = useState(initialData);
-
+const Form = ({
+  setUserDataApp,
+  formData,
+  setFormData,
+  setEditing,
+  editing,
+}) => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    setUserDataApp((previous) => [...previous, formData]);
-    updateLocalServer(formData);
+    if (editing) {
+      const opts = {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(formData),
+      };
+
+      fetch(`${baseUrl}/data/${formData.id}`, opts)
+        .then((res) => res.json())
+        .then((data) => {});
+
+      setUserDataApp((prevArr) => {
+        const updatedArr = prevArr.map((item) => {
+          if (item.id === formData.id) {
+            return formData;
+          }
+          return item;
+        });
+        return updatedArr;
+      });
+
+      setEditing(false);
+    } else {
+      const id = Math.random();
+      setUserDataApp((previous) => [...previous, { ...formData, id }]);
+      updateLocalServer(formData, id);
+    }
     setFormData(initialData);
   };
+
+  console.log("formadata.id", formData.id);
 
   const handleChange = (event) => {
     const { name, type, value, checked } = event.target;
@@ -128,7 +149,11 @@ const Form = ({ setUserDataApp }) => {
           onChange={handleChange}
         />
       </label>
-      <input className="form__submit" type="submit" value="Submit Survey!" />
+      <input
+        className="form__submit"
+        type="submit"
+        value={editing ? "Update Survey" : "Submit Survey!!"}
+      />
     </form>
   );
 };

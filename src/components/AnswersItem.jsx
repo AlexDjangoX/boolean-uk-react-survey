@@ -1,19 +1,11 @@
+import { Button, Grid } from "@nextui-org/react";
+
 const answersSet = {
   swimming: "Swimming",
   bathing: "Bathing",
   chatting: "Chatting",
   noTime: "I don't like to spend time with it",
 };
-
-async function deleteFromLocalServer(el) {
-  try {
-    return await fetch(`http://localhost:3000/data/${el}`, {
-      method: "DELETE",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 function ItemsList({ list }) {
   return (
@@ -25,24 +17,56 @@ function ItemsList({ list }) {
   );
 }
 
-export default function AnswersItem({ answerItem, setFormData }) {
+export default function AnswersItem({
+  answerItem,
+  setFormData,
+  setUserDataApp,
+  setEditing,
+}) {
+  async function deleteFromLocalServer(el) {
+    try {
+      console.log("élement ID", el);
+      await fetch(`http://localhost:3000/data/${el.id}`, {
+        method: "DELETE",
+      });
+      setUserDataApp((previous) =>
+        previous.filter((item) => item.id !== el.id)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <li>
       <article className="answer">
-        <button
-          type="button"
-          onClick={() => {
-            setFormData;
-          }}
-        >
-          Edit
-        </button>
-        <button
-          id={answerItem.id}
-          onClick={(e) => deleteFromLocalServer(e.target.id)}
-        >
-          Delete
-        </button>
+        <Grid.Container gap={2}>
+          <Grid>
+            <Button
+              color="warning"
+              auto
+              type="button"
+              onClick={(e) => {
+                console.log("ánswer item editing", answerItem);
+                setEditing(true);
+                setFormData(answerItem);
+              }}
+            >
+              Edit
+            </Button>
+          </Grid>
+          <Grid>
+            <Button
+              color="error"
+              auto
+              id={answerItem.id}
+              onPress={() => deleteFromLocalServer(answerItem)}
+            >
+              Delete
+            </Button>
+          </Grid>
+        </Grid.Container>
+
         <h3>{answerItem.userName || "Anon"} said:</h3>
         <p>
           <em>How do you rate your rubber duck colour?</em>
