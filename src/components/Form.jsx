@@ -47,7 +47,6 @@ const Form = ({
         });
         return updatedArr;
       });
-
       setEditing(false);
     } else {
       const id = Math.random();
@@ -56,8 +55,6 @@ const Form = ({
     }
     setFormData(initialData);
   };
-
-  console.log("formadata.id", formData.id);
 
   const handleChange = (event) => {
     const { name, type, value, checked } = event.target;
@@ -79,7 +76,7 @@ const Form = ({
 
     if (name === "spend-time") {
       if (checked) {
-        setFormData({ ...formData, value: true, noTime: false });
+        setFormData({ ...formData, value: checked, noTime: !checked });
         if (!formData.timeSpent.includes(value))
           setFormData({
             ...formData,
@@ -87,7 +84,7 @@ const Form = ({
             timeSpent: [...formData.timeSpent, value],
           });
       } else {
-        setFormData({ ...formData, value: false });
+        setFormData({ ...formData, value: !checked });
         let filteredArray = formData.timeSpent.filter((el) => el !== value);
         setFormData({
           ...formData,
@@ -100,13 +97,13 @@ const Form = ({
       setFormData({
         ...formData,
         [value]: !checked,
-        noTime: true,
-        swimming: false,
-        bathing: false,
-        chatting: false,
-        timeSpent: ["No time"],
+        noTime: checked,
+        swimming: !checked,
+        bathing: !checked,
+        chatting: !checked,
+        timeSpent: [value],
       });
-      if (!checked) setFormData({ ...formData, noTime: false });
+      if (!checked) setFormData({ ...formData, noTime: !checked });
     }
   };
 
@@ -159,31 +156,3 @@ const Form = ({
 };
 
 export default Form;
-
-// if (name === "swimming") {
-//   if (checked) setFormData({ ...formData, swimming: true, noTime: false });
-//   setFormData({ ...formData, timeSpent: [...timeSpent, "swimming"] });
-//   if (!checked) setFormData({ ...formData, swimming: false });
-// }
-// if (name === "bathing") {
-//   if (checked) setFormData({ ...formData, bathing: true, noTime: false });
-//   setFormData({ ...formData, timeSpent: [...timeSpent, "bathing"] });
-//   if (!checked) setFormData({ ...formData, bathing: false });
-// }
-// if (name === "chatting") {
-//   if (checked) setFormData({ ...formData, chatting: true, noTime: false });
-//   setFormData({ ...formData, timeSpent: [...timeSpent, "chatting"] });
-//   if (!checked) setFormData({ ...formData, chatting: false });
-// }
-// if (name === "noTime") {
-//   if (checked) {
-//     setFormData({
-//       ...formData,
-//       swimming: false,
-//       bathing: false,
-//       chatting: false,
-//       noTime: true,
-//     });
-//     if (!checked) setFormData({ ...formData, noTime: false });
-//   }
-// }

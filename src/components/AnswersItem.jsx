@@ -25,7 +25,6 @@ export default function AnswersItem({
 }) {
   async function deleteFromLocalServer(el) {
     try {
-      console.log("élement ID", el);
       await fetch(`http://localhost:3000/data/${el.id}`, {
         method: "DELETE",
       });
@@ -46,8 +45,7 @@ export default function AnswersItem({
               color="warning"
               auto
               type="button"
-              onClick={(e) => {
-                console.log("ánswer item editing", answerItem);
+              onPress={() => {
                 setEditing(true);
                 setFormData(answerItem);
               }}

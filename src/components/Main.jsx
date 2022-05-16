@@ -3,7 +3,7 @@ import Form from "./Form";
 import AnswersList from "./AnswersList";
 import { initialData } from "../Utils";
 
-function Main({ addDataHandler, userDataApp, setUserDataApp }) {
+function Main({ userDataApp, setUserDataApp }) {
   const [open, setOpen] = useState(false); //Ignore this state
   const [formData, setFormData] = useState(initialData);
   const [editing, setEditing] = useState(false);
